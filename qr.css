@@ -123,10 +123,6 @@ h1 {
 .content-wrapper {
    width: 50vh;
     margin: 0 auto;
-    /* display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center; */
     z-index:1;
     padding: 32px;
     background: white;
@@ -155,7 +151,6 @@ h1 {
     background: #f8f9fa;
     padding: 24px;
     border-radius: 8px;
-    /* margin: 24px 0; */
 }
 
 #class-details h2 {
@@ -165,7 +160,6 @@ h1 {
 }
 
 #class-details p {
-    /* margin: 12px 0; */
     color: #444;
     line-height: 1.5;
 }
