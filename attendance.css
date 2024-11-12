@@ -160,10 +160,9 @@ justify-content: center;
     color: white;
 }
 #attendance-list {
-    max-width: 800px;
+   width: 80%;
     margin: 20px auto;
     border-collapse: collapse;
-    width: 100%;
     background-color: rgba(223, 236, 236, 0.8);
     border-radius: 15px;
     color:#003459;

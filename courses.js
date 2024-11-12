@@ -11,14 +11,27 @@ async function initializePage() {
         const data = await response.json();
         console.log("API Response:", data); // Debug log
         
+        // Sort courses alphabetically by course name
+        const sortedCourses = data.courses.sort((a, b) => 
+            a.courseName.localeCompare(b.courseName)
+        );
+        
         // Clear existing options except 'All'
         select.innerHTML = '<option value="All">All</option>';
 
         // First, clear all existing boxes
         optionsContainer.innerHTML = '';
 
-        // Create boxes dynamically based on API data
-        data.courses.forEach(course => {
+        // Add sorted course names to dropdown
+        sortedCourses.forEach(course => {
+            const newOption = document.createElement("option");
+            newOption.textContent = course.courseName;
+            newOption.value = course.subject;
+            select.appendChild(newOption);
+        });
+
+        // Create boxes dynamically based on sorted courses
+        sortedCourses.forEach(course => {
             // Create box for each course
             const courseBox = document.createElement('div');
             courseBox.className = `${course.subject} box`;
@@ -43,12 +56,6 @@ async function initializePage() {
                 </div>
             `;
             optionsContainer.appendChild(courseBox);
-
-            // Add option to dropdown
-            const newOption = document.createElement("option");
-            newOption.textContent = course.courseName;
-            newOption.value = course.subject;
-            select.appendChild(newOption);
         });
 
         // Make all boxes visible initially
@@ -62,9 +69,6 @@ async function initializePage() {
         optionsContainer.innerHTML = '<p>Error loading course data. Please try again later.</p>';
     }
 }
-
-// Set initial placeholder
-// searchInput.placeholder = "All";
 
 // Update input placeholder and filter boxes when dropdown changes
 select.addEventListener("change", function() {
@@ -85,29 +89,6 @@ btn.addEventListener("click", (evt) => {
     filterCourses(selectedSubject, searchTerm);
 });
 
-// Filter courses based on selection and search term
-// function filterCourses(selectedSubject, searchTerm) {
-//     const allBoxes = document.querySelectorAll('.box');
-//     const searchTermUpper = searchTerm.toUpperCase();
-    
-//     allBoxes.forEach(box => {
-//         const courseName = box.querySelector('h2').textContent.trim();
-//         const courseCode = box.querySelector('.course-code.option #data p').textContent.trim();
-        
-//         const matchesSearch = 
-//             courseName.toUpperCase().includes(searchTermUpper) ||
-//             courseCode.toUpperCase().includes(searchTermUpper);
-            
-//         if (selectedSubject === 'All') {
-//             box.style.display = matchesSearch || !searchTerm ? 'block' : 'none';
-//         } else {
-//             box.style.display = 
-//                 (box.classList.contains(selectedSubject) && (matchesSearch || !searchTerm))
-//                 ? 'block' : 'none';
-//         }
-//     });
-// }
-
 function filterCourses(selectedSubject, searchTerm) {
     const allBoxes = document.querySelectorAll('.box');
     const searchTermUpper = searchTerm.toUpperCase();
@@ -120,11 +101,9 @@ function filterCourses(selectedSubject, searchTerm) {
             courseName.toUpperCase().includes(searchTermUpper) ||
             courseCode.toUpperCase().includes(searchTermUpper);
         
-        // Only display the selected subject or all, depending on the dropdown value
         if (selectedSubject === 'All') {
             box.style.display = matchesSearch || !searchTerm ? 'block' : 'none';
         } else {
-            // Show only the box matching the selected subject and search term
             box.style.display = 
                 box.classList.contains(selectedSubject) && (matchesSearch || !searchTerm) 
                 ? 'block' : 'none';
