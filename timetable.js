@@ -71,7 +71,7 @@ async function generateQRCode(sessionID, API, className, duration, scheduledDate
         "courseId": 2,
         "duration": "60",
         "startTime": "2024-11-04T16:30:00.000Z"
-    }
+    }
 
     };
 
